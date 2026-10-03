@@ -76,14 +76,21 @@ Nothing else needs regenerating.
 
 ## Development shell
 
-`nix develop` (or `direnv allow`) gives a shell with the same Go the build
-uses. `go build`, `go test` and `go run ./cmd/greet` work as usual. gonixgo
-does not run tests yet.
+`nix develop --option allow-unsafe-native-code-during-evaluation true` (or
+`direnv allow`) gives a shell with the same Go the build uses and with
+`greet` itself, built by gonixgo, on `PATH`. `go build`, `go test` and
+`go run ./cmd/greet` work as usual. gonixgo does not run tests yet.
+
+With direnv, `.envrc` watches `go.mod`, `go.sum`, `cmd/` and `internal/`:
+after you change a source file, the next prompt in the directory reloads the
+shell, and the `greet` on `PATH` is rebuilt from the new source, again only
+the packages that changed. Nix sees only the files git tracks, so `git add`
+a new file before it shows up in the build.
 
 ## Notes
 
-- `nix flake check` and `nix flake show` evaluate `packages`, so they need
-  the option too.
+- `nix develop`, `nix flake check` and `nix flake show` evaluate `packages`,
+  so they need the option too.
 - gonixgo 0.1.0 builds pure-Go programs. Packages that use cgo and modules
   with `replace` directives are rejected with an explanation; see gonixgo's
   README for the current limits.

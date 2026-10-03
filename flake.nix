@@ -37,6 +37,9 @@
           };
         });
 
+      # The shell carries the built program, so entering it (or direnv
+      # reloading it after a source change, see .envrc) rebuilds `greet`.
+      # It therefore needs the same evaluation option as `packages`.
       devShells = eachSystem (system: pkgs: {
         default = pkgs.mkShell {
           shellHook = ''
@@ -44,7 +47,7 @@
           '';
           hardeningDisable = [ "all" ];
 
-          packages = with pkgs; [ go ];
+          packages = [ pkgs.go self.packages.${system}.default ];
         };
       });
     };
