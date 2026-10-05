@@ -94,3 +94,7 @@ a new file before it shows up in the build.
 - gonixgo 0.1.0 builds pure-Go programs. Packages that use cgo and modules
   with `replace` directives are rejected with an explanation; see gonixgo's
   README for the current limits.
+
+## License
+
+MIT, see [LICENSE](LICENSE).

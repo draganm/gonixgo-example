@@ -34,6 +34,7 @@
             src = ./.;
             subPackages = [ "cmd/greet" ];
             ldflags = [ "-X main.version=0.1.0" ];
+            meta.license = pkgs.lib.licenses.mit;
           };
         });
 
